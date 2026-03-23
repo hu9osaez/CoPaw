@@ -1,0 +1,39 @@
+.editTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.titleDisplay {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.titleDisplay:hover {
+  color: var(--ant-color-primary);
+}
+
+.editIcon {
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: var(--ant-text-color-secondary);
+}
+
+.editIcon:hover {
+  color: var(--ant-color-primary);
+}
+
+.editTitleContainer:hover .editIcon {
+  opacity: 1;
+}
+
+.editTitleInput {
+  max-width: 200px;
+}
+
+.loadingIndicator {
+  margin-left: 8px;
+}

@@ -717,7 +717,9 @@
     "attachments": {
       "tooltip": "Supports documents, images, videos, audio and more formats, single file up to 10MB",
       "fileSizeLimit": "Single file cannot exceed 10MB"
-    }
+    },
+    "rename": "Rename chat",
+    "titleEmpty": "Chat title cannot be empty"
   },
   "security": {
     "title": "Security",

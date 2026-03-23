@@ -23,6 +23,7 @@ import styles from "./index.module.less";
 import { Tooltip } from "antd";
 import { IconButton } from "@agentscope-ai/design";
 import { SparkAttachmentLine } from "@agentscope-ai/icons";
+import { EditableTitle } from "./components/EditableTitle";
 
 type CopyableContent = {
   type?: string;
@@ -164,6 +165,21 @@ export default function ChatPage() {
     const match = location.pathname.match(/^\/chat\/(.+)$/);
     return match?.[1];
   }, [location.pathname]);
+
+  const currentSessionName = useMemo(() => {
+    if (!chatId) return "New Chat";
+    const session = sessionApi.sessionList.find(
+      (s) => s.id === chatId || (s as any).realId === chatId
+    );
+    return session?.name || "New Chat";
+  }, [chatId, sessionApi.sessionList]);
+
+  const handleSaveTitle = useCallback((newTitle: string) => {
+    console.log('Title save requested:', newTitle);
+    // TODO: Phase 2 - Implement actual save logic with chatApi.updateChat
+    message.info('Title saving will be implemented in Phase 2');
+  }, []);
+
   const [showModelPrompt, setShowModelPrompt] = useState(false);
   const { selectedAgent } = useAgentStore();
   const [refreshKey, setRefreshKey] = useState(0);
@@ -452,9 +468,12 @@ export default function ChatPage() {
       theme: {
         ...defaultConfig.theme,
         darkMode: isDark,
-        leftHeader: {
-          ...defaultConfig.theme.leftHeader,
-        },
+        leftHeader: (
+          <EditableTitle
+            title={currentSessionName}
+            onSave={handleSaveTitle}
+          />
+        ),
         rightHeader: (
           <>
             <RuntimeLoadingBridge bridgeRef={runtimeLoadingBridgeRef} />
@@ -559,7 +578,7 @@ export default function ChatPage() {
         replace: true,
       },
     } as unknown as IAgentScopeRuntimeWebUIOptions;
-  }, [wrappedSessionApi, customFetch, copyResponse, t, isDark]);
+  }, [wrappedSessionApi, customFetch, copyResponse, t, isDark, currentSessionName, handleSaveTitle]);
 
   return (
     <div
